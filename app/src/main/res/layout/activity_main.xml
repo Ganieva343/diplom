@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6e6b6b"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/upper_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/PersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="79dp"
+            android:layout_marginEnd="99dp"
+            android:layout_marginBottom="398dp"
+            android:ems="10"
+            android:textColor="@color/black"
+            android:hint="Имя"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="137dp" />
+
+        <EditText
+            android:id="@+id/PersonFamily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="78dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="474dp"
+            android:ems="10"
+            android:textColor="@color/black"
+            android:hint="Фамилия"
+            android:inputType="textPersonName"
+            tools:ignore="MissingConstraints,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="199dp" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="81dp"
+            android:layout_marginEnd="97dp"
+            android:layout_marginBottom="324dp"
+            android:ems="10"
+            android:textColor="@color/black"
+            android:hint="E_mail"
+            android:inputType="textEmailAddress"
+            tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="98dp"
+            android:layout_marginBottom="245dp"
+            android:textColor="@color/black"
+            android:ems="10"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="326dp" />
+
+        <Button
+            android:id="@+id/register"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="69dp"
+            android:layout_marginEnd="73dp"
+            android:layout_marginBottom="53dp"
+            android:text="Зарегистрироваться"
+            android:textColor="#757575" />
+
+        <Button
+            android:id="@+id/zaregister"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="103dp"
+            android:layout_marginBottom="109dp"
+            android:backgroundTint="@color/bot"
+            android:text="Регистрация"
+            android:textColor="#2E2E2E"
+            android:textSize="14dp"
+            tools:ignore="TextSizeCheck" />
+
+        <Button
+            android:id="@+id/loginr"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="109dp"
+            android:layout_marginBottom="109dp"
+            android:backgroundTint="@color/bot"
+            android:text="Войти"
+            android:textColor="#2E2E2E"
+            android:textSize="14dp"
+            tools:ignore="TextSizeCheck" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="46dp"
+            android:layout_marginEnd="70dp"
+            app:srcCompat="@drawable/logo2" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
