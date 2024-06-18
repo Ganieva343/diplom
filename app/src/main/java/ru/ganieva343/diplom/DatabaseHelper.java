@@ -23,6 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String TABLE = "users";
     static final String TABLE2 = "types";
     static final String TABLE3 = "devices";
+    static final String TABLE4 = "image";
+    static final String TABLE5 = "id_type_and_image";
     // Название столбцов
     static final String COLUMN_ID = "_id";
     static final String COLUMN_SURNAME = "surname";
@@ -43,9 +45,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String COLUMN_IP_address = "ip_address";
     static final String COLUMN_IDwifi_network = "wifi_network_id";
 
+    // Название столбцы таблицы image
+    static final String COLUMN_IDImage = "_id";
+    static final String COLUMN_image = "image";
+
+    // Название столбцы таблицы id_type_and_image
+    static final String COLUMN_IDTandI = "_id";
+    static final String COLUMN_IDT = "type_id";
+    static final String COLUMN_IDI = "image_id";
+
+    private Context myContext;
 
     DatabaseHelper(Context context) {
+
         super(context, DB_NAME, null, SCHEMA);
+        this.myContext=context;
+        DB_PATH =context.getFilesDir().getPath() + DB_NAME;
     }
 
     @Override
@@ -55,11 +70,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " TEXT, " + COLUMN_NAME + " TEXT, " + COLUMN_E_MAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT); ");
 
         db.execSQL("CREATE TABLE " + TABLE2 + " (" + COLUMN_IDType
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAMEType + "TEXT); ");
+                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAMEType + " TEXT); ");
+
+        db.execSQL("CREATE TABLE " + TABLE5 + " (" + COLUMN_IDTandI
+                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_IDT + " INTEGER, " + COLUMN_IDI + " INTEGER); ");
+
+        db.execSQL("CREATE TABLE " + TABLE4 + " (" + COLUMN_IDImage
+                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_image + " TEXT); ");
 
         db.execSQL("CREATE TABLE " + TABLE3 + " (" + COLUMN_IDdevices
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_IDuser + " INTEGER, " + COLUMN_IDtype + " INTEGER, " +
-                COLUMN_NAMEdevices + "TEXT, " + COLUMN_IDimage + " INTEGER, " + COLUMN_IP_address + " TEXT, " + COLUMN_IDwifi_network + " INTEGER);");
+                COLUMN_NAMEdevices + " TEXT, " + COLUMN_IDimage + " INTEGER, " + COLUMN_IP_address + " TEXT, " + COLUMN_IDwifi_network + " INTEGER);");
 
     }
     @Override

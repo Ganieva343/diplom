@@ -38,6 +38,8 @@
         android:id="@+id/buttonAddDevice"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/bot"
+        android:textColor="#2E2E2E"
         android:text="Сохранить" />
 
 

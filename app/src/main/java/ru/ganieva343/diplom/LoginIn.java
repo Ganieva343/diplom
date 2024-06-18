@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,6 +33,7 @@ public class LoginIn extends AppCompatActivity {
     Cursor typeCursor;
     SimpleCursorAdapter typeAdapter;
 
+    ArrayList<State> states = new ArrayList<State>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,22 +47,33 @@ public class LoginIn extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showDialogToAddDevice();
             }
         });
 
+        // начальная инициализация списка
+        getDevicesWithTypes();
+        RecyclerView recyclerView = findViewById(R.id.list);
+        // создаем адаптер
+        StateAdapter adapter = new StateAdapter(this, states);
+        // устанавливаем для списка адаптер
+        recyclerView.setAdapter(adapter);
+
+
         // Инициализация ListView и адаптера
-        ListView deviceView = findViewById(R.id.deviceView);
-        ArrayAdapter<DeviseList> adapter = new ArrayAdapter<>(LoginIn.this, R.layout.activity_login_in, getDevicesWithTypes());
-        deviceView.setAdapter(adapter);
+        //ListView deviceView = findViewById(R.id.deviceView);
+        //ArrayAdapter<DeviseList> adapter = new ArrayAdapter<>(LoginIn.this, R.layout.activity_login_in, R.id.deviceView, getDevicesWithTypes());
+        //deviceView.setAdapter(adapter);
+
 
 // Обновление UI после получения данных
-        deviceView.post(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        deviceView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     private void showDialogToAddDevice() {
@@ -178,21 +191,23 @@ public class LoginIn extends AppCompatActivity {
         }
     }
 
-    private List<DeviseList> getDevicesWithTypes() {
-        List<DeviseList> devicesWithTypes = new ArrayList<>();
+    private void getDevicesWithTypes() {
+        //List<DeviseList> devicesWithTypes = new ArrayList<>();
 
         // Получаем список всех устройств
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        String query = "SELECT COLUMN_NAMEdevices, COLUMN_NAMEType " +
-                "FROM DatabaseHelper.TABLE3 d " +
-                "JOIN DatabaseHelper.TABLE2 t ON d.COLUMN_IDtype = t.COLUMN_IDType";
+        String query = "SELECT " + DatabaseHelper.COLUMN_NAMEdevices + ", " + DatabaseHelper.COLUMN_NAMEType +
+                " FROM " + DatabaseHelper.TABLE3 +
+                " JOIN " + DatabaseHelper.TABLE2 + " ON " + DatabaseHelper.TABLE2 + "." + DatabaseHelper.COLUMN_IDType + " = " +
+                DatabaseHelper.TABLE3 + "." + DatabaseHelper.COLUMN_IDtype;;
         Cursor deviceCursor = db.rawQuery(query, null);
         while (deviceCursor.moveToNext()) {
             String deviceName = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEdevices));
             String deviceType = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEType));
 
+            states.add(new State (deviceName, deviceType, R.drawable.socket));
             // Добавляем устройство с типом в список
-            devicesWithTypes.add(new DeviseList(deviceType, deviceName));
+            //devicesWithTypes.add(new DeviseList(deviceType, deviceName));
 
             // Получаем тип устройства по ID
             //Cursor typeCursor = db.query(DatabaseHelper.TABLE2, null, DatabaseHelper.COLUMN_IDtype + "=?", new String[]{String.valueOf(deviceType)}, null, null, null);
@@ -205,7 +220,7 @@ public class LoginIn extends AppCompatActivity {
            // }
         }
         deviceCursor.close();
-        return devicesWithTypes;
+        // return devicesWithTypes;
     }
 
     public class DeviseList extends Pair<String, String> {
@@ -216,7 +231,7 @@ public class LoginIn extends AppCompatActivity {
 
         @Override
         public String toString() {
-            return first + "\n" + second;
+            return first + " : " + second;
         }
     }
 
