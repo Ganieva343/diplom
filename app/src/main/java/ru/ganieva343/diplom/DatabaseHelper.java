@@ -64,28 +64,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE + " (" + COLUMN_ID
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_SURNAME
-                + " TEXT, " + COLUMN_NAME + " TEXT, " + COLUMN_E_MAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT); ");
-
-        db.execSQL("CREATE TABLE " + TABLE2 + " (" + COLUMN_IDType
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAMEType + " TEXT); ");
-
-        db.execSQL("CREATE TABLE " + TABLE5 + " (" + COLUMN_IDTandI
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_IDT + " INTEGER, " + COLUMN_IDI + " INTEGER); ");
-
-        db.execSQL("CREATE TABLE " + TABLE4 + " (" + COLUMN_IDImage
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_image + " TEXT); ");
-
-        db.execSQL("CREATE TABLE " + TABLE3 + " (" + COLUMN_IDdevices
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_IDuser + " INTEGER, " + COLUMN_IDtype + " INTEGER, " +
-                COLUMN_NAMEdevices + " TEXT, " + COLUMN_IDimage + " INTEGER, " + COLUMN_IP_address + " TEXT, " + COLUMN_IDwifi_network + " INTEGER);");
-
-    }
+    public void onCreate(SQLiteDatabase db) { }
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS users;");
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
+
+    void create_db(){
+
+        File file = new File(DB_PATH);
+        if (!file.exists()) {
+            //получаем локальную бд как поток
+            try(InputStream myInput = myContext.getAssets().open(DB_NAME);
+                // Открываем пустую бд
+                OutputStream myOutput = new FileOutputStream(DB_PATH)) {
+
+                // побайтово копируем данные
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = myInput.read(buffer)) > 0) {
+                    myOutput.write(buffer, 0, length);
+                }
+                myOutput.flush();
+            }
+            catch(IOException ex){
+                Log.d("DatabaseHelper", ex.getMessage());
+            }
+        }
+    }
+    public SQLiteDatabase open()throws SQLException {
+
+        return SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
     }
 }
 
