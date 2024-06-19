@@ -5,6 +5,7 @@ public class State {
     private String deviceType;  // тип
     private int imageResource; // ресурс картинки
 
+
     public State(String name, String type, int image){
 
         this.deviceName=name;
@@ -20,7 +21,7 @@ public class State {
         this.deviceName = name;
     }
 
-    public String deviceType() {
+    public String getType() {
         return this.deviceType;
     }
 

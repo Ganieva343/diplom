@@ -57,8 +57,12 @@ public class MainActivity extends AppCompatActivity {
         buttonzaRegister.setVisibility(View.INVISIBLE);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        db = databaseHelper.getWritableDatabase();
         // создаем базу данных
+        databaseHelper.create_db();
+
+        // открываем подключение
+        db = databaseHelper.open();
+
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     buttonzaRegister.setVisibility(View.INVISIBLE);
                     buttonlogin.setVisibility(View.VISIBLE);
                     buttonRegister.setText("Зарегистрироваться");
-                    //Toast.makeText(MainActivity.this, "Ошибка, возможно некоторые поля незаполнены", Toast.LENGTH_SHORT).show();
-                    //сюда можно вставить код авторизации
                 }
             }
         });

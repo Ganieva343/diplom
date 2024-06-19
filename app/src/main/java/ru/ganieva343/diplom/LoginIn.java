@@ -2,6 +2,7 @@ package ru.ganieva343.diplom;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,7 +41,8 @@ public class LoginIn extends AppCompatActivity {
         setContentView(R.layout.activity_login_in);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        db = databaseHelper.getWritableDatabase();
+        // открываем подключение
+        db = databaseHelper.open();;
 
 
         Button button = findViewById(R.id.button);
@@ -59,21 +61,14 @@ public class LoginIn extends AppCompatActivity {
         StateAdapter adapter = new StateAdapter(this, states);
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(adapter);
+        //adapter.setOnItemClickListener(new StateAdapter.OnItemClickListener() {
+         //   @Override
+        //    public void onItemClick(View view, int position) {
+        //        Intent intent = new Intent(LoginIn.this, Update_delete.class);
+        //        startActivity(intent);
+        //    }
+        //});
 
-
-        // Инициализация ListView и адаптера
-        //ListView deviceView = findViewById(R.id.deviceView);
-        //ArrayAdapter<DeviseList> adapter = new ArrayAdapter<>(LoginIn.this, R.layout.activity_login_in, R.id.deviceView, getDevicesWithTypes());
-        //deviceView.setAdapter(adapter);
-
-
-// Обновление UI после получения данных
-//        deviceView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
     }
 
     private void showDialogToAddDevice() {
@@ -97,9 +92,7 @@ public class LoginIn extends AppCompatActivity {
 
                 Toast.makeText(LoginIn.this, "Устройство добавлено", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                //было
-                //Toast.makeText(LoginIn.this, "Устройство добавлено: " + deviceName, Toast.LENGTH_SHORT).show();
-                //.dismiss();
+
                 Dialog dialog = new Dialog(LoginIn.this);
                 dialog.setContentView(R.layout.dialog_update_device);
 
@@ -111,6 +104,7 @@ public class LoginIn extends AppCompatActivity {
                 ArrayAdapter<MyPair> adapter = new ArrayAdapter<>(LoginIn.this, android.R.layout.simple_spinner_item, getAllNamesWithIds());
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
+                //метод сохранения устройства в базе
                 buttonAddDevice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -120,13 +114,23 @@ public class LoginIn extends AppCompatActivity {
                         int userId = intent.getIntExtra("id", -1);
                         // получение id типа устройства
                         MyPair selectedDeviceType = (MyPair) spinner.getSelectedItem();
-                        int deviceId = selectedDeviceType.first;
+                        int typeId = selectedDeviceType.first;
+
+                        // получение id картинки
+                        Cursor imageCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_IDI + " from "+ DatabaseHelper.TABLE5
+                                + " where " + DatabaseHelper.COLUMN_IDT + " = " + typeId
+                                , null);
+                        imageCursor.moveToFirst();
+
+                        int imageId = imageCursor.getInt(imageCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IDI));
+
+                        imageCursor.close();
+
                         ContentValues cv = new ContentValues();
                         cv.put(DatabaseHelper.COLUMN_IDuser, userId);
-                        cv.put(DatabaseHelper.COLUMN_IDtype, deviceId);
+                        cv.put(DatabaseHelper.COLUMN_IDtype, typeId);
                         cv.put(DatabaseHelper.COLUMN_NAMEdevices, editTextDeviceName.getText().toString());
-                        //cv.put(DatabaseHelper.COLUMN_E_MAIL, editTextEmail.getText().toString());
-                       // cv.put(DatabaseHelper.COLUMN_PASSWORD, editTextPassword.getText().toString());
+                        cv.put(DatabaseHelper.COLUMN_IDimage, imageId);
                         long result = db.insert(DatabaseHelper.TABLE3, null, cv);
                         if (result > 0) {
                             Snackbar.make(view, "Устройство сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
@@ -166,7 +170,6 @@ public class LoginIn extends AppCompatActivity {
 
     public List<MyPair> getAllNamesWithIds() {
         List<MyPair> namesAndIdsList = new ArrayList<>();
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from "+ DatabaseHelper.TABLE2
                 , null);
         if (cursor.moveToFirst()) {
@@ -191,21 +194,41 @@ public class LoginIn extends AppCompatActivity {
         }
     }
 
+    //метод вывода устройств в основное окно
     private void getDevicesWithTypes() {
-        //List<DeviseList> devicesWithTypes = new ArrayList<>();
-
         // Получаем список всех устройств
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
         String query = "SELECT " + DatabaseHelper.COLUMN_NAMEdevices + ", " + DatabaseHelper.COLUMN_NAMEType +
-                " FROM " + DatabaseHelper.TABLE3 +
+                ", " + DatabaseHelper.COLUMN_IDimage + " FROM " + DatabaseHelper.TABLE3 +
                 " JOIN " + DatabaseHelper.TABLE2 + " ON " + DatabaseHelper.TABLE2 + "." + DatabaseHelper.COLUMN_IDType + " = " +
                 DatabaseHelper.TABLE3 + "." + DatabaseHelper.COLUMN_IDtype;;
         Cursor deviceCursor = db.rawQuery(query, null);
-        while (deviceCursor.moveToNext()) {
-            String deviceName = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEdevices));
-            String deviceType = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEType));
+        try {
+            while (deviceCursor!= null && deviceCursor.moveToNext()) {
+                int imageId = deviceCursor.getInt(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IDimage));
 
-            states.add(new State (deviceName, deviceType, R.drawable.socket));
+                if (imageId > 0) {
+                    Cursor imageCursor = db.rawQuery("SELECT " + DatabaseHelper.COLUMN_image + " FROM " + DatabaseHelper.TABLE4
+                            + " WHERE " + DatabaseHelper.COLUMN_IDImage + " =?", new String[]{String.valueOf(imageId)});
+                    if (imageCursor!= null && imageCursor.moveToFirst()) {
+                        String imageD = imageCursor.getString(imageCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_image));
+                        String deviceName = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEdevices));
+                        String deviceType = deviceCursor.getString(deviceCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAMEType));
+
+                        Context context = getApplicationContext();
+
+                        // Преобразование строки в идентификатор ресурса
+                        int resourceId = context.getResources().getIdentifier(imageD, "drawable", context.getPackageName());
+
+                        states.add(new State(deviceName, deviceType, resourceId));
+                    }
+                    imageCursor.close();
+                }
+            }
+        } finally {
+            if (deviceCursor!= null) {
+                deviceCursor.close();
+            }
+        }
             // Добавляем устройство с типом в список
             //devicesWithTypes.add(new DeviseList(deviceType, deviceName));
 
@@ -218,10 +241,8 @@ public class LoginIn extends AppCompatActivity {
                 // Добавляем устройство с типом в список
              //   devicesWithTypes.add(new DeviseList(deviceName, typeName));
            // }
-        }
-        deviceCursor.close();
-        // return devicesWithTypes;
     }
+        // return devicesWithTypes;
 
     public class DeviseList extends Pair<String, String> {
         public DeviseList(String  first, String second)

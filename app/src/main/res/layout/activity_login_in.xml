@@ -18,10 +18,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
+        tools:listitem="@layout/list_item"
         android:layout_width="357dp"
         android:layout_height="587dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="120dp"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

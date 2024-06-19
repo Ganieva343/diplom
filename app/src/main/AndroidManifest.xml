@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Diplom"
         tools:targetApi="31">
         <activity
+            android:name=".Update_delete"
+            android:exported="false" />
+        <activity
             android:name=".LoginIn"
             android:exported="false" />
         <activity

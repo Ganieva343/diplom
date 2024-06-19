@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String COLUMN_IDdevices = "_id";
     static final String COLUMN_IDuser = "_id_user";
     static final String COLUMN_IDtype = "_id_type";
-    static final String COLUMN_NAMEdevices = "nameTEXT";
+    static final String COLUMN_NAMEdevices = "name";
     static final String COLUMN_IDimage = "_id_image";
     static final String COLUMN_IP_address = "ip_address";
     static final String COLUMN_IDwifi_network = "wifi_network_id";
