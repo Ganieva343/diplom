@@ -42,6 +42,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(StateAdapter.ViewHolder holder, int position) {
         State state = states.get(position);
+        holder.idView.setText(state.getDeviceID());
         holder.imageView.setImageResource(state.getImageResource());
         holder.nameView.setText(state.getName());
         holder.typeView.setText(state.getType());
@@ -60,6 +61,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
                 Context context = v.getContext();
                 Intent intent = new Intent(context, Update_delete.class);
 
+                intent.putExtra("id", state.getDeviceID());
                 intent.putExtra("imageResource", state.getImageResource());
                 intent.putExtra("name", state.getName());
                 intent.putExtra("type", state.getType());
@@ -77,10 +79,11 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView;
-        final TextView nameView, typeView;
+        final TextView idView, nameView, typeView;
 
         ViewHolder(View view){
             super(view);
+            idView = view.findViewById(R.id.idDevice);
             imageView = view.findViewById(R.id.image);
             nameView = view.findViewById(R.id.name);
             typeView = view.findViewById(R.id.type);

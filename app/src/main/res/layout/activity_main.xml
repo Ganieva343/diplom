@@ -29,10 +29,7 @@
             android:textColor="@color/black"
             android:hint="Имя"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="137dp" />
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/PersonFamily"
@@ -47,10 +44,7 @@
             android:ems="10"
             android:textColor="@color/black"
             android:hint="Фамилия"
-            android:inputType="textPersonName"
-            tools:ignore="MissingConstraints,TouchTargetSizeCheck"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="199dp" />
+            android:inputType="textPersonName"/>
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
@@ -65,10 +59,7 @@
             android:ems="10"
             android:textColor="@color/black"
             android:hint="E_mail"
-            android:inputType="textEmailAddress"
-            tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="261dp" />
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/editTextTextPassword"
@@ -83,10 +74,7 @@
             android:textColor="@color/black"
             android:ems="10"
             android:hint="Пароль"
-            android:inputType="textPassword"
-            tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="326dp" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/register"

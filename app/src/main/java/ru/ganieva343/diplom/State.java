@@ -1,16 +1,26 @@
 package ru.ganieva343.diplom;
 
 public class State {
+    private String deviceID; // id устройства
     private String deviceName; // название
     private String deviceType;  // тип
     private int imageResource; // ресурс картинки
 
 
-    public State(String name, String type, int image){
+    public State(String deviceID, String name, String type, int image){
 
+        this.deviceID=deviceID;
         this.deviceName=name;
         this.deviceType=type;
         this.imageResource=image;
+    }
+
+    public String getDeviceID() {
+        return this.deviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        this.deviceID = deviceID;
     }
 
     public String getName() {

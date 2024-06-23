@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String COLUMN_NAMEType = "type";
 
     // Название столбцы таблицы devices
-    static final String COLUMN_IDdevices = "_id";
+    static final String COLUMN_IDdevices = "id_device";
     static final String COLUMN_IDuser = "_id_user";
     static final String COLUMN_IDtype = "_id_type";
     static final String COLUMN_NAMEdevices = "name";

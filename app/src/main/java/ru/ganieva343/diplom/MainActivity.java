@@ -3,6 +3,7 @@ package ru.ganieva343.diplom;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         editTextName = findViewById(R.id.PersonName);
         editTextSurname = findViewById(R.id.PersonFamily);
@@ -137,11 +138,17 @@ public class MainActivity extends AppCompatActivity {
                                 Snackbar.make(view, "Успешно", BaseTransientBottomBar.LENGTH_LONG).show();
                                 startActivity(new Intent(MainActivity.this, LoginIn.class)
                                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                //отправка id пользователя в активность LoginIn
+                                //отправка id пользователя в активность LoginIn и User
                                 int id = userCursor.getInt(userCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
                                 Intent intent = new Intent(view.getContext(), LoginIn.class);
                                 intent.putExtra("id", id); // id - переменная, содержащая ID пользователя
                                 startActivity(intent);
+
+                                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putInt("id", id);
+                                editor.apply();
+
                             } else {
                                 Snackbar.make(view, "Неправильный пароль", BaseTransientBottomBar.LENGTH_LONG)
                                         .setTextColor(getColor(R.color.white))
@@ -197,5 +204,4 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-
 }
