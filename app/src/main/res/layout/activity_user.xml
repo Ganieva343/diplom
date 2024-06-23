@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_border"
+    tools:context=".User">
+
+    <ImageView
+        android:id="@+id/image_icon"
+        android:layout_width="160dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginStart="110dp"
+        app:srcCompat="@drawable/icon" />
+
+    <ImageView
+        android:id="@+id/out"
+        android:layout_width="48dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="310dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/out" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="318dp"
+        android:layout_height="356dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginStart="50dp">
+
+        <EditText
+            android:id="@+id/userFamily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Фамилия"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Имя"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userFamily"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="E_mail"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+        <EditText
+            android:id="@+id/userPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userEmail" />
+
+        <ImageView
+            android:id="@+id/imageFamely"
+            android:layout_width="30dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/userFamily"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/user" />
+
+        <ImageView
+            android:id="@+id/imageName"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/userName"
+            app:layout_constraintTop_toBottomOf="@+id/imageFamely"
+            app:srcCompat="@drawable/user" />
+
+        <ImageView
+            android:id="@+id/imageEmail"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/userEmail"
+            app:layout_constraintTop_toBottomOf="@+id/imageName"
+            app:srcCompat="@drawable/email_icon" />
+
+        <ImageView
+            android:id="@+id/imageParol"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/userEmail"
+            app:layout_constraintTop_toBottomOf="@+id/imageEmail"
+            app:srcCompat="@drawable/password" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/update_profil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/bot"
+        android:layout_marginTop="630dp"
+        android:layout_marginStart="80dp"
+        android:text="Сохранить изменения"
+        android:textColor="#2E2E2E"
+        android:textSize="16dp" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
